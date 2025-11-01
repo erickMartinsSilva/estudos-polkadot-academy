@@ -53,7 +53,11 @@ export function initApp() {
             transactionsDisplay.innerHTML = "<h3>Últimas Transações:</h3>";
             data.result.forEach((tx: any) => {
                 const txElement = document.createElement("p");
-                txElement.textContent = `De: ${tx.from} Para: ${tx.to} - Valor: ${formatEther(tx.value)} ETH`;
+                const dateTime = new Date(tx.timeStamp * 1000)
+                const dateBR = dateTime.toLocaleDateString("pt-BR")
+                const timeBR = dateTime.toLocaleTimeString("pt-BR")
+                
+                txElement.textContent = `Data: ${dateBR} Hora: ${timeBR} | De: ${tx.from} Para: ${tx.to} - Valor: ${formatEther(tx.value)} ETH`;
                 transactionsDisplay.appendChild(txElement);
             });
         } catch (error) {
