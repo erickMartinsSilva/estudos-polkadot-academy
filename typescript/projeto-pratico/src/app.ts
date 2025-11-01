@@ -10,7 +10,11 @@ export function initApp() {
     const checkTransactionsButton = document.getElementById("check-transactions") as HTMLButtonElement; 
  
     checkBalanceButton.addEventListener("click", async () => { 
-        const address = walletInput.value.trim();
+        const address = walletInput.value.trim().normalize("NFKC");
+        if(!address.startsWith("0x") || !/^[0-9a-fA-FxX]^/.test(address)) {
+            balanceDisplay.textContent = "Endereço inválido!"; 
+            return; 
+        }
         if (!isAddress(address)) { 
             balanceDisplay.textContent = "Endereço inválido!"; 
             return; 
