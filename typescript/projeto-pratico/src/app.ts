@@ -62,6 +62,10 @@ export function initApp() {
         const provider = new EtherscanProvider(networkSelectInput.value, process.env.ETHERSCAN_API_KEY);
 
         const address = walletInput.value.trim().normalize("NFKC");
+        if(address == "") {
+            balanceDisplay.textContent = "Por favor, insira um endereço válido.";
+            return;
+        }
         if(!validateAddress(address)) {
             balanceDisplay.textContent = "Endereço inválido!"; 
             return; 
@@ -79,9 +83,14 @@ export function initApp() {
     }); 
  
     checkTransactionsButton.addEventListener("click", async () => { 
+        transactionsDisplay.style.display = 'block'
         const address = walletInput.value.trim(); 
+        if(address == "") {
+            transactionsDisplay.textContent = "Por favor, insira um endereço válido.";
+            return;
+        }
         if(!validateAddress(address)) {
-            balanceDisplay.textContent = "Endereço inválido!"; 
+            transactionsDisplay.textContent = "Endereço inválido!"; 
             return; 
         }
         currentAddress = address
