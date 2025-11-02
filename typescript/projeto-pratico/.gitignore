@@ -4,9 +4,5 @@ node_modules
 # environment variables
 .env
 
-# config files
-tsconfig.json
-webpack.config.js
-
 # build files
 dist
