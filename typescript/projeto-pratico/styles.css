@@ -61,6 +61,11 @@ button:active {
   transform: translateY(1px);
 }
 
+.logo {
+  width: 15%;
+  margin-bottom: -2%;
+}
+
 #balance {
   margin-top: 20px;
   font-size: 1.2rem;
