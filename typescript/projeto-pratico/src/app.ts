@@ -15,6 +15,12 @@ export function initApp() {
     const nextPageButton = document.getElementById('next-page') as HTMLButtonElement
     const previousPageButton = document.getElementById('previous-page') as HTMLButtonElement
 
+    const validateAddress = (address: string) => {
+        return (
+            (address.startsWith("0x") && /^[0-9a-fA-FxX]^/.test(address)) || isAddress(address)
+        )
+    }
+
     const fetchTransactions = async (address: string) => {
         const provider = new EtherscanProvider(networkSelectInput.value, process.env.ETHERSCAN_API_KEY);
 
@@ -45,11 +51,7 @@ export function initApp() {
         const provider = new EtherscanProvider(networkSelectInput.value, process.env.ETHERSCAN_API_KEY);
 
         const address = walletInput.value.trim().normalize("NFKC");
-        if(!address.startsWith("0x") && !/^[0-9a-fA-FxX]^/.test(address)) {
-            balanceDisplay.textContent = "Endereço inválido!"; 
-            return; 
-        }
-        if (!isAddress(address)) { 
+        if(!validateAddress(address)) {
             balanceDisplay.textContent = "Endereço inválido!"; 
             return; 
         }
@@ -66,14 +68,10 @@ export function initApp() {
  
     checkTransactionsButton.addEventListener("click", async () => { 
         const address = walletInput.value.trim(); 
-        if(!address.startsWith("0x")) {
-            transactionsDisplay.textContent = "Endereço inválido!"; 
+        if(!validateAddress(address)) {
+            balanceDisplay.textContent = "Endereço inválido!"; 
             return; 
         }
-        if (!isAddress(address)) { 
-            transactionsDisplay.textContent = "Endereço inválido!"; 
-            return; 
-        } 
         currentAddress = address
  
         try {
