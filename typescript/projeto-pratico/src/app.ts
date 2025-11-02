@@ -4,19 +4,20 @@ let currentAddress = ""
 let currentPage = 1
 const pageSize = 5
 
-const provider = new EtherscanProvider("mainnet", process.env.ETHERSCAN_API_KEY);
-
 export function initApp() { 
     const walletInput = document.getElementById("wallet-address") as HTMLInputElement; 
     const balanceDisplay = document.getElementById("balance") as HTMLParagraphElement; 
     const transactionsDisplay = document.getElementById("transactions") as HTMLDivElement; 
     const checkBalanceButton = document.getElementById("check-balance") as HTMLButtonElement; 
     const checkTransactionsButton = document.getElementById("check-transactions") as HTMLButtonElement;
+    const networkSelectInput = document.getElementById("networks") as HTMLInputElement
     const transactionsPageControlsDisplay = document.getElementById("transactions-controls") as HTMLDivElement 
     const nextPageButton = document.getElementById('next-page') as HTMLButtonElement
     const previousPageButton = document.getElementById('previous-page') as HTMLButtonElement
 
     const fetchTransactions = async (address: string) => {
+        const provider = new EtherscanProvider(networkSelectInput.value, process.env.ETHERSCAN_API_KEY);
+
         const apiKey = provider.apiKey ? provider.apiKey : "YourApiKeyToken";
         const url = `https://api.etherscan.io/v2/api?chainid=1&action=txlist&module=account&address=${address}&page=${currentPage}&offset=${pageSize}&apikey=${apiKey}`;
         const response = await fetch(url);
@@ -41,6 +42,8 @@ export function initApp() {
     }
 
     checkBalanceButton.addEventListener("click", async () => { 
+        const provider = new EtherscanProvider(networkSelectInput.value, process.env.ETHERSCAN_API_KEY);
+
         const address = walletInput.value.trim().normalize("NFKC");
         if(!address.startsWith("0x") || !/^[0-9a-fA-FxX]^/.test(address)) {
             balanceDisplay.textContent = "Endereço inválido!"; 
