@@ -1,4 +1,5 @@
 import { isAddress, formatEther, EtherscanProvider } from "ethers";
+import '../styles.css';
 
 let currentAddress = ""
 let currentPage = 1
@@ -24,6 +25,7 @@ export function initApp() {
     const fetchTransactions = async (address: string) => {
         const provider = new EtherscanProvider(networkSelectInput.value, process.env.ETHERSCAN_API_KEY);
 
+        transactionsDisplay.style.display = 'block'
         transactionsPageControlsDisplay.style.display = 'none'
         transactionsDisplay.textContent = "Buscando transações..."
 
@@ -37,7 +39,7 @@ export function initApp() {
             return;
         }
 
-        transactionsPageControlsDisplay.style.display = 'block'
+        transactionsPageControlsDisplay.style.display = 'flex'
         transactionsDisplay.innerHTML = "<h3>Últimas Transações:</h3>";
         data.result.forEach((tx: any) => {
             const txElement = document.createElement("p");
@@ -45,7 +47,13 @@ export function initApp() {
             const dateBR = dateTime.toLocaleDateString("pt-BR")
             const timeBR = dateTime.toLocaleTimeString("pt-BR")
 
-            txElement.textContent = `Data: ${dateBR} Hora: ${timeBR} | De: ${tx.from} Para: ${tx.to} - Valor: ${formatEther(tx.value)} ETH`;
+            txElement.innerHTML = 
+                `<p>
+                    <strong>Data</strong>: ${dateBR}, <strong>Hora</strong>: ${timeBR}<br/>
+                    <strong>De</strong>: ${tx.from} <br/> 
+                    <strong>Para</strong>: ${tx.to} <br/> 
+                    <strong>Valor</strong>: ${formatEther(tx.value)} ETH
+                </p>`;
             transactionsDisplay.appendChild(txElement);
         });
     }
