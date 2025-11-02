@@ -15,7 +15,11 @@ npm i
 4. Obtenha uma chave da API do Etherscan para permitir com que o projeto realize requisições (https://etherscan.io/);
 5. Crie um arquivo `.env` na pasta raiz do projeto (`projeto-pratico`) e preencha-o com base no arquivo `.env.example`;
 6. Insira a chave de API do Etherscan no campo `ETHERSCAN_API_KEY` do `.env`;
-7. Rode o projeto:
+7. Compile o projeto com Webpack:
+```
+npm build
+```
+9. Rode o projeto:
 ```
 npm start
 ```
