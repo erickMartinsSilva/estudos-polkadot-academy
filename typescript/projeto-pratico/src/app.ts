@@ -45,7 +45,7 @@ export function initApp() {
         const provider = new EtherscanProvider(networkSelectInput.value, process.env.ETHERSCAN_API_KEY);
 
         const address = walletInput.value.trim().normalize("NFKC");
-        if(!address.startsWith("0x") || !/^[0-9a-fA-FxX]^/.test(address)) {
+        if(!address.startsWith("0x") && !/^[0-9a-fA-FxX]^/.test(address)) {
             balanceDisplay.textContent = "Endereço inválido!"; 
             return; 
         }
