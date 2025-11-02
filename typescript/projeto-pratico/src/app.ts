@@ -24,6 +24,9 @@ export function initApp() {
     const fetchTransactions = async (address: string) => {
         const provider = new EtherscanProvider(networkSelectInput.value, process.env.ETHERSCAN_API_KEY);
 
+        transactionsPageControlsDisplay.style.display = 'none'
+        transactionsDisplay.textContent = "Buscando transações..."
+
         const apiKey = provider.apiKey ? provider.apiKey : "YourApiKeyToken";
         const url = `https://api.etherscan.io/v2/api?chainid=1&action=txlist&module=account&address=${address}&page=${currentPage}&offset=${pageSize}&apikey=${apiKey}`;
         const response = await fetch(url);
@@ -58,6 +61,7 @@ export function initApp() {
         currentAddress = address
  
         try { 
+            balanceDisplay.textContent = "Buscando saldo..."
             const balance = await provider.getBalance(address); 
             balanceDisplay.textContent = `Saldo: ${formatEther(balance)} ETH`; 
         } catch (error) { 
