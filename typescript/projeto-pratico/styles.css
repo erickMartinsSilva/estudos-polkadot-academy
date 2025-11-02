@@ -19,20 +19,6 @@ h1 {
   text-shadow: 0 0 10px rgba(184, 170, 242, 0.4);
 }
 
-/* === FORMULÁRIO === */
-input,
-select {
-  background-color: #242938;
-  border: 1px solid #3c3f57;
-  color: #e5e7eb;
-  padding: 10px 14px;
-  border-radius: 8px;
-  margin: 10px 6px;
-  font-size: 1rem;
-  width: 240px;
-  transition: border-color 0.2s ease;
-}
-
 input:focus,
 select:focus {
   outline: none;
@@ -66,17 +52,53 @@ button:active {
   margin-bottom: -2%;
 }
 
+.form {
+  width: 25%;
+  background: #1f2534;
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(98, 126, 234, 0.1);
+  padding: 10px;
+}
+
+.input-container {
+  display: flex;
+  flex-direction: column;
+  color: #e5e7eb;
+  padding: 10px 14px;
+  border-radius: 8px;
+  margin: 10px 6px;
+  font-size: 1rem;
+  transition: border-color 0.2s ease;
+
+  input, select {
+    background-color: #1a1e2986;
+    border: 1px solid #3c3f57;
+    color: #e5e7eb;
+    padding: 10px 14px;
+    border-radius: 8px;
+    margin-top: 2%;
+    font-size: 1rem;
+    transition: border-color 0.2s ease;
+  }
+}
+
+.form-submit {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 #balance {
+  text-align: center;
   margin-top: 20px;
   font-size: 1.2rem;
-  color: #b8aaf2;
 }
 
 /* === SEÇÃO DE TRANSAÇÕES === */
-#transactions {
+#results {
   display: hidden;
   margin-top: 20px;
-  max-width: 600px;
+  width: 30%;
   background: #1f2534;
   padding: 20px;
   border-radius: 12px;
@@ -85,19 +107,8 @@ button:active {
   max-height: 400px;
 }
 
-.transaction-item {
-  border-bottom: 1px solid #2c3144;
-  padding: 10px 0;
-}
-
-.transaction-item:last-child {
-  border-bottom: none;
-}
-
-.transaction-hash {
-  color: #9ca3af;
-  font-size: 0.9rem;
-  word-break: break-all;
+.transactions-title {
+  text-align: center;
 }
 
 #transactions-controls {

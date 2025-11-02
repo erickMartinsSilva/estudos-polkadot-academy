@@ -7,6 +7,7 @@ const pageSize = 5
 
 export function initApp() { 
     const walletInput = document.getElementById("wallet-address") as HTMLInputElement; 
+    const resultsDisplay = document.getElementById("results") as HTMLDivElement;
     const balanceDisplay = document.getElementById("balance") as HTMLParagraphElement; 
     const transactionsDisplay = document.getElementById("transactions") as HTMLDivElement; 
     const checkBalanceButton = document.getElementById("check-balance") as HTMLButtonElement; 
@@ -25,9 +26,9 @@ export function initApp() {
     const fetchTransactions = async (address: string) => {
         const provider = new EtherscanProvider(networkSelectInput.value, process.env.ETHERSCAN_API_KEY);
 
-        transactionsDisplay.style.display = 'block'
+        resultsDisplay.style.display = 'block'
         transactionsPageControlsDisplay.style.display = 'none'
-        transactionsDisplay.textContent = "Buscando transações..."
+        transactionsDisplay.innerHTML = `<h3 class="transactions-title">Buscando transações...</h3>`;
 
         const apiKey = provider.apiKey ? provider.apiKey : "YourApiKeyToken";
         const url = `https://api.etherscan.io/v2/api?chainid=1&action=txlist&module=account&address=${address}&page=${currentPage}&offset=${pageSize}&apikey=${apiKey}`;
@@ -35,12 +36,12 @@ export function initApp() {
         const data = await response.json();
 
         if (data.status !== "1" || !data.result) {
-            transactionsDisplay.textContent = "Nenhuma transação encontrada.";
+            transactionsDisplay.innerHTML = `<h3 class="transactions-title">Nenhuma transação encontrada.</h3>`;
             return;
         }
 
         transactionsPageControlsDisplay.style.display = 'flex'
-        transactionsDisplay.innerHTML = "<h3>Últimas Transações:</h3>";
+        transactionsDisplay.innerHTML = `<h3 class="transactions-title">Últimas Transações:</h3>`;
         data.result.forEach((tx: any) => {
             const txElement = document.createElement("p");
             const dateTime = new Date(tx.timeStamp * 1000)
@@ -59,6 +60,8 @@ export function initApp() {
     }
 
     checkBalanceButton.addEventListener("click", async () => { 
+        resultsDisplay.style.display = "block"
+
         const provider = new EtherscanProvider(networkSelectInput.value, process.env.ETHERSCAN_API_KEY);
 
         const address = walletInput.value.trim().normalize("NFKC");
@@ -73,6 +76,7 @@ export function initApp() {
         currentAddress = address
  
         try { 
+            resultsDisplay.style.display = "block"
             balanceDisplay.textContent = "Buscando saldo..."
             const balance = await provider.getBalance(address); 
             balanceDisplay.textContent = `Saldo: ${formatEther(balance)} ETH`; 
@@ -83,14 +87,14 @@ export function initApp() {
     }); 
  
     checkTransactionsButton.addEventListener("click", async () => { 
-        transactionsDisplay.style.display = 'block'
+        resultsDisplay.style.display = 'block'
         const address = walletInput.value.trim(); 
         if(address == "") {
-            transactionsDisplay.textContent = "Por favor, insira um endereço válido.";
+            balanceDisplay.textContent = "Por favor, insira um endereço válido.";
             return;
         }
         if(!validateAddress(address)) {
-            transactionsDisplay.textContent = "Endereço inválido!"; 
+            balanceDisplay.textContent = "Endereço inválido!"; 
             return; 
         }
         currentAddress = address
@@ -98,7 +102,7 @@ export function initApp() {
         try {
             fetchTransactions(address);
         } catch (error) {
-            transactionsDisplay.textContent = "Erro ao buscar as transações.";
+            balanceDisplay.textContent = "Erro ao buscar as transações.";
             console.error(error);
         }
     }); 

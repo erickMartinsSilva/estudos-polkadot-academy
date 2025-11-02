@@ -8,19 +8,28 @@
 <body> 
     <img class="logo" src="public/ethereum-logo.png" alt="Ethereum Logo">
     <h1>Consulta de Saldo e Transações - Ethereum</h1> 
-    <label for="wallet-address">Endereço da carteira</label>
-    <input type="text" id="wallet-address" placeholder="Digite o 
-endereço da carteira" /> 
-    <label for="networks">Rede desejada</label>
-    <select id="networks">
-        <option value="mainnet">Mainnet</option>
-        <option value="sepolia">Sepolia</option>
-        <option value="rinkeby">Rinkeby</option>
-    </select>
-    <button id="check-balance">Consultar Saldo</button> 
-    <button id="check-transactions">Ver Transações</button> 
-    <p id="balance"></p> 
-    <div id="transactions" hidden></div> 
+    <div class="form">
+        <div class="input-container">
+            <label for="wallet-address">Endereço da carteira</label>
+            <input type="text" id="wallet-address" placeholder="Digite o endereço da carteira" /> 
+        </div>
+        <div class="input-container">
+            <label for="networks">Rede desejada</label>
+            <select id="networks">
+                <option value="mainnet">Mainnet</option>
+                <option value="sepolia">Sepolia</option>
+                <option value="rinkeby">Rinkeby</option>
+            </select>
+        </div>
+        <div class="form-submit">
+            <button id="check-balance">Consultar Saldo</button> 
+            <button id="check-transactions">Ver Transações</button> 
+        </div>
+    </div>
+    <div id="results" hidden>
+        <strong><p id="balance"></p></strong>
+        <div id="transactions"></div>
+    </div> 
     <div id="transactions-controls" hidden>
         <button id="previous-page">< </button>
         <button id="next-page">> </button>
